@@ -1,0 +1,126 @@
+{
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": [
+                "null",
+                "integer"
+            ]
+        },
+        "type": {
+            "type": [
+                "null",
+                "string"
+            ]
+        },
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "employee": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "date": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "start_time": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "end_time": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "break": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "comment": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "updated_at": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "status": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "project": {
+                    "type": [
+                        "null",
+                        "object"
+                    ],
+                    "properties": {
+                        "type": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "id": {
+                            "type": [
+                                "null",
+                                "integer"
+                            ]
+                        },
+                        "attributes": {
+                            "type": [
+                                "null",
+                                "object"
+                            ],
+                            "properties": {
+                                "name": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "active": {
+                                    "type": [
+                                        "null",
+                                        "boolean"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "is_holiday": {
+                    "type": [
+                        "null",
+                        "boolean"
+                    ]
+                },
+                "is_on_time_off": {
+                    "type": [
+                        "null",
+                        "boolean"
+                    ]
+                }
+            }
+        }
+    }
+}
