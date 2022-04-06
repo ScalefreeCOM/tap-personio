@@ -1,0 +1,171 @@
+{
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": [
+                "null",
+                "string"
+            ]
+        },
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "status": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "comment": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "start_date": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "end_date": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "days_count": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "half_day_start": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "half_day_end": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "time_off_type": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "attributes": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": [
+                                        "null",
+                                        "integer"
+                                    ]
+                                },
+                                "name": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "category": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "employee": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        },
+                        "attributes": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": [
+                                        "null",
+                                        "integer"
+                                    ]
+                                },
+                                "first_name": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "last_name": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                },
+                                "email": {
+                                    "type": [
+                                        "null",
+                                        "string"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "created_by": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "certificate": {
+                    "type": "object",
+                    "properties": {
+                        "status": {
+                            "type": [
+                                "null",
+                                "string"
+                            ]
+                        }
+                    }
+                },
+                "created_at": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": [
+                        "null",
+                        "string"
+                    ],
+                    "format": "date-time"
+                }
+            }
+        }
+    }
+}

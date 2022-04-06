@@ -32,6 +32,10 @@ STREAM_PARAMS = {
     }
 }
 
+SUB_STREAMS = {
+    'projects': 'attendances/projects'
+}
+
 
 def get_abs_path(path):
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
@@ -105,7 +109,7 @@ def auth():
 def sync_stream(url, headers, limit=200, offset=0, start_date=None, end_date=None):
     page = 1
     LOGGER.info(f"Start date: {start_date}")
-    
+
     session = requests.Session()
     
     querystring = {
@@ -117,22 +121,28 @@ def sync_stream(url, headers, limit=200, offset=0, start_date=None, end_date=Non
     
     headers['Authorization'] = f"Bearer {auth()}"
     response = session.request("GET", url, headers=headers, params=querystring)
+    LOGGER.info("API request: " + url)
     first_page = response.json()
     yield first_page
     
-    number_pages = first_page['metadata']['total_pages']
-    total_elements = first_page['metadata']['total_elements']
-    
-    LOGGER.debug(f"Total elements: {total_elements}")
-    LOGGER.info(f"Batch 1 of {number_pages}")
-    
-    for page in range(1, number_pages):
-        LOGGER.info(f"Batch {page+1} of {number_pages}")
-        querystring['offset'] += limit
-        headers['Authorization'] = f"Bearer {auth()}"
-        response = session.request("GET", url, headers=headers, params=querystring)
-        next_page = response.json()
-        yield next_page
+    if 'metadata' in first_page:
+        LOGGER.info(f"Metadata: {first_page['metadata']}")
+        number_pages = first_page['metadata']['total_pages']
+        total_elements = first_page['metadata']['total_elements']
+        
+        LOGGER.debug(f"Total elements: {total_elements}")
+        LOGGER.info(f"Batch 1 of {number_pages}")
+        
+        for page in range(1, number_pages):
+            LOGGER.info(f"Batch {page+1} of {number_pages}")
+            if 'time-offs' in url:
+                querystring['offset'] += 1
+            else:
+                querystring['offset'] += limit
+            headers['Authorization'] = f"Bearer {auth()}"
+            response = session.request("GET", url, headers=headers, params=querystring)
+            next_page = response.json()
+            yield next_page
         
 
 def sync(config, state, catalog):
@@ -157,7 +167,10 @@ def sync(config, state, catalog):
         Context.new_counts[stream.tap_stream_id] = 0
         Context.updated_counts[stream.tap_stream_id] = 0
 
-        url = f"https://api.personio.de/v1/company/{stream.tap_stream_id}"
+        if stream.tap_stream_id in SUB_STREAMS:
+            url = f"https://api.personio.de/v1/company/{SUB_STREAMS[stream.tap_stream_id]}"
+        else:
+            url = f"https://api.personio.de/v1/company/{stream.tap_stream_id}"
         headers = {'accept': 'application/json', 'Authorization': 'Bearer {token}'.format(token=Context.auth_token)}
         
         start_date = Context.config.get('start_date')
@@ -166,7 +179,11 @@ def sync(config, state, catalog):
         max_bookmark = None
         for batch in sync_stream(url=url, headers=headers, start_date=start_date, end_date=end_date):
             if batch['success']:
-                Context.new_counts[stream.tap_stream_id] = batch['metadata']['total_elements']
+                if 'metadata' in batch:
+                    Context.new_counts[stream.tap_stream_id] = batch['metadata']['total_elements']
+                else:
+                    Context.new_counts[stream.tap_stream_id] = len(batch['data'])
+
                 transformed_row = {}
                 with singer.metrics.record_counter(endpoint=stream.tap_stream_id) as counter:
                     for row in batch['data']:
@@ -186,6 +203,7 @@ def sync(config, state, catalog):
                         singer.write_state({stream.tap_stream_id: max_bookmark})
                         
             else:
+                LOGGER.error(batch)
                 LOGGER.error("Failed to get data")
         LOGGER.info(f"Extracted {Context.new_counts[stream.tap_stream_id]} records from {stream.tap_stream_id}")
     return

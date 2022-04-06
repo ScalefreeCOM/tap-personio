@@ -1,0 +1,70 @@
+{
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": [
+                "null",
+                "string"
+            ]
+        },
+        "attributes": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "unit": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "category": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "half_day_requests_enabled": {
+                    "type": [
+                        "null",
+                        "boolean"
+                    ]
+                },
+                "certification_required": {
+                    "type": [
+                        "null",
+                        "boolean"
+                    ]
+                },
+                "certification_submission_timeframe": {
+                    "type": [
+                        "null",
+                        "integer"
+                    ]
+                },
+                "substitute_option": {
+                    "type": [
+                        "null",
+                        "string"
+                    ]
+                },
+                "approval_required": {
+                    "type": [
+                        "null",
+                        "boolean"
+                    ]
+                }
+            }
+        }
+    }
+}

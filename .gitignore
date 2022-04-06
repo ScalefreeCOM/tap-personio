@@ -1,5 +1,8 @@
 .meltano/
 meltano.yml
+catalog*
+out*
+properties.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
